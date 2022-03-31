@@ -47,19 +47,17 @@ class RpnStacker {
 
     private ArrayList<String> readInstance() {
         ArrayList<String> lines = new ArrayList<String>();
-
         try {
-        File f = new File("instance.txt");
-        Scanner myReader = new Scanner(f);
-
-        while (myReader.hasNextLine()) {
-            String line = myReader.nextLine();
-            lines.add(line);
-        }
-        myReader.close();
+            File f = new File("instance.txt");
+            Scanner myReader = new Scanner(f);
+            while (myReader.hasNextLine()) {
+                String line = myReader.nextLine();
+                lines.add(line);
+            }
+            myReader.close();
         } catch (FileNotFoundException e) {
-        System.out.println("An error occurred.");
-        e.printStackTrace();
+            System.out.println("An error occurred.");
+            e.printStackTrace();
         }
         return lines;
     }
