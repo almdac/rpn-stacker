@@ -6,44 +6,42 @@ import java.util.Stack;
 
 class RpnStacker {
     public static void main(String[] args) {
-       RpnStacker rpnStacker = new RpnStacker();
-       ArrayList<String> lines = rpnStacker.readInstance()
-       Stack<float> stk = new Stack<float>();
+        RpnStacker rpnStacker = new RpnStacker();
+        ArrayList<String> lines = rpnStacker.readInstance();
+        Stack<Float> stk = new Stack<Float>();
+        String line;
+        Float a;
+        Float b;
 
-       for (int i = 0; i < lines.size(); i++) {
-            String line = lines[i]
-            
-            switch(line) {
-                case '+':
-                    float a = stack.pop();
-                    float b = stack.pop();
-                    float result = a+b;
-                    stk.push(result);
-                    break;
-                case '-':
-                    float a = stack.pop();
-                    float b = stack.pop();
-                    float result = a-b;
-                    stk.push(result);
-                    break;
-                case '*':
-                    float a = stack.pop();
-                    float b = stack.pop();
-                    float result = a*b;
-                    stk.push(result);
-                    break;
-                case '/':
-                    float a = stack.pop();
-                    float b = stack.pop();
-                    float result = a/b;
-                    stk.push(result);
-                    break;
-                default:
-                    stk.push(Float.parseFloat(line));
-                    break;
-            }
-       }
-       float result = stack.pop()
+        for (int i = 0; i < lines.size(); i++) {
+                line = lines.get(i);
+                switch(line) {
+                    case "+":
+                        a = stk.pop();
+                        b = stk.pop();
+                        stk.push(a+b);
+                        break;
+                    case "-":
+                        a = stk.pop();
+                        b = stk.pop();
+                        stk.push(a-b);
+                        break;
+                    case "*":
+                        a = stk.pop();
+                        b = stk.pop();
+                        stk.push(a*b);
+                        break;
+                    case "/":
+                        a = stk.pop();
+                        b = stk.pop();
+                        stk.push(a/b);
+                        break;
+                    default:
+                        stk.push(Float.parseFloat(line));
+                        break;
+                }
+        }
+       float result = stk.pop();
        System.out.println(result);
     }
 
@@ -63,7 +61,6 @@ class RpnStacker {
         System.out.println("An error occurred.");
         e.printStackTrace();
         }
-
-        return lines
+        return lines;
     }
 }
