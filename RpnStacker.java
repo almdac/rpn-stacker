@@ -5,25 +5,14 @@ import java.util.ArrayList;
 import java.util.Stack;
 import java.util.regex.*;
 
-class UnexpectedElement extends Exception { 
-    public UnexpectedElement(String element) {
+import stacker.rpn.lexer.TokenType;
+import stacker.rpn.lexer.Token;
+
+class UnexpectedCharacter extends Exception { 
+    public UnexpectedCharacter(String element) {
         super("Unexpected character: " + element);
     }
 }
-class Token {
-    String type;
-    String lexeme;
-
-    public Token(String t, String l) {
-        type = t;
-        lexeme = l;
-    }
-
-    public void print() {
-        System.out.printf("Token[type=%s, lexeme=%s]\n", type, lexeme);
-    }
-}
-
 class RpnStacker {
     public static void main(String[] args) {
         RpnStacker rpnStacker = new RpnStacker();
@@ -35,7 +24,7 @@ class RpnStacker {
 
         try{
             tokens = rpnStacker.scanner(input);
-        } catch(UnexpectedElement e) {
+        } catch(UnexpectedCharacter e) {
             System.out.println(e);
             return;
         }
@@ -43,28 +32,30 @@ class RpnStacker {
         for (int i = 0; i < tokens.size(); i++) {
                 Token token = tokens.get(i);
                 switch(token.type) {
-                    case "PLUS":
+                    case PLUS:
                         a = stk.pop();
                         b = stk.pop();
                         stk.push(a+b);
                         break;
-                    case "MIN":
+                    case MINUS:
                         a = stk.pop();
                         b = stk.pop();
                         stk.push(a-b);
                         break;
-                    case "MULT":
+                    case STAR:
                         a = stk.pop();
                         b = stk.pop();
                         stk.push(a*b);
                         break;
-                    case "DIV":
+                    case SLASH:
                         a = stk.pop();
                         b = stk.pop();
                         stk.push(a/b);
                         break;
-                    case "NUM":
+                    case NUM:
                         stk.push(Float.parseFloat(token.lexeme));
+                        break;
+                    case EOF:
                         break;
                 }
         }
@@ -72,39 +63,39 @@ class RpnStacker {
        System.out.println(result);
     }
 
-    private ArrayList<Token> scanner(ArrayList<String> input) throws UnexpectedElement {
+    private ArrayList<Token> scanner(ArrayList<String> input) throws UnexpectedCharacter {
         ArrayList<Token> tokens = new ArrayList<Token>();
         
         for (int i = 0; i < input.size(); i++) {
             String element = input.get(i);
 
             if (Pattern.matches("[0-9]{1,}", element)) {
-                Token token = new Token("NUM", element);
-                token.print();
+                Token token = new Token(TokenType.NUM, element);
+                System.out.println(token.toString());
                 tokens.add(token);
             }
             else if (Pattern.matches("\\+", element)) {
-                Token token = new Token("PLUS", element);
-                token.print();
+                Token token = new Token(TokenType.PLUS, element);
+                System.out.println(token.toString());
                 tokens.add(token);
             }
             else if (Pattern.matches("\\-", element)) {
-                Token token = new Token("MIN", element);
-                token.print();
+                Token token = new Token(TokenType.MINUS, element);
+                System.out.println(token.toString());
                 tokens.add(token);
             }
             else if (Pattern.matches("\\/", element)) {
-                Token token = new Token("DIV", element);
-                token.print();
+                Token token = new Token(TokenType.SLASH, element);
+                System.out.println(token.toString());
                 tokens.add(token);
             }
             else if (Pattern.matches("\\*", element)) {
-                Token token = new Token("MULT", element);
-                token.print();
+                Token token = new Token(TokenType.STAR, element);
+                System.out.println(token.toString());
                 tokens.add(token);
             }
             else {
-                throw new UnexpectedElement(element);
+                throw new UnexpectedCharacter(element);
             }
         }
         
