@@ -83,25 +83,28 @@ class RpnStacker {
                 token.print();
                 tokens.add(token);
             }
-            if (Pattern.matches("\\+", element)) {
+            else if (Pattern.matches("\\+", element)) {
                 Token token = new Token("PLUS", element);
                 token.print();
                 tokens.add(token);
             }
-            if (Pattern.matches("\\-", element)) {
+            else if (Pattern.matches("\\-", element)) {
                 Token token = new Token("MIN", element);
                 token.print();
                 tokens.add(token);
             }
-            if (Pattern.matches("\\/", element)) {
+            else if (Pattern.matches("\\/", element)) {
                 Token token = new Token("DIV", element);
                 token.print();
                 tokens.add(token);
             }
-            if (Pattern.matches("\\*", element)) {
+            else if (Pattern.matches("\\*", element)) {
                 Token token = new Token("MULT", element);
                 token.print();
                 tokens.add(token);
+            }
+            else {
+                throw new UnexpectedElement(element);
             }
         }
         
