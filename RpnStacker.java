@@ -31,6 +31,7 @@ class RpnStacker {
 
         for (int i = 0; i < tokens.size(); i++) {
                 Token token = tokens.get(i);
+                System.out.println(token.toString());
                 switch(token.type) {
                     case PLUS:
                         a = stk.pop();
@@ -71,27 +72,22 @@ class RpnStacker {
 
             if (Pattern.matches("[0-9]{1,}", element)) {
                 Token token = new Token(TokenType.NUM, element);
-                System.out.println(token.toString());
                 tokens.add(token);
             }
             else if (Pattern.matches("\\+", element)) {
                 Token token = new Token(TokenType.PLUS, element);
-                System.out.println(token.toString());
                 tokens.add(token);
             }
             else if (Pattern.matches("\\-", element)) {
                 Token token = new Token(TokenType.MINUS, element);
-                System.out.println(token.toString());
                 tokens.add(token);
             }
             else if (Pattern.matches("\\/", element)) {
                 Token token = new Token(TokenType.SLASH, element);
-                System.out.println(token.toString());
                 tokens.add(token);
             }
             else if (Pattern.matches("\\*", element)) {
                 Token token = new Token(TokenType.STAR, element);
-                System.out.println(token.toString());
                 tokens.add(token);
             }
             else {
